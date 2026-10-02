@@ -1,0 +1,42 @@
+[project]
+name = "src"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "cryptography>=49.0.0",
+    "matplotlib>=3.10.7",
+    "pandas>=2.3.3",
+    "piq>=0.8.0",
+    "pytest>=9.1.1",
+    "requests>=2.34.2",
+    "scikit-learn>=1.7.2",
+    "seaborn>=0.13.2",
+    "tensorboard>=2.20.0",
+    "torch",
+    "torchvision",
+]
+
+[tool.uv.sources]
+torch = [
+    # macOS → CPU torch from PyPI
+    { index = "pypi", marker = "sys_platform == 'darwin'" },
+
+    # Linux → CUDA 12.1 torch
+    { index = "pytorch-cu121", marker = "sys_platform != 'darwin'" },
+]
+
+torchvision = [
+    { index = "pypi", marker = "sys_platform == 'darwin'" },
+    { index = "pytorch-cu121", marker = "sys_platform != 'darwin'" },
+]
+
+[[tool.uv.index]]
+name = "pypi"
+url  = "https://pypi.org/simple"
+
+[[tool.uv.index]]
+name = "pytorch-cu121"
+url  = "https://download.pytorch.org/whl/cu121"
+
+[tool.pyright]
+extraPaths = ["."]
